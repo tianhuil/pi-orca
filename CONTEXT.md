@@ -17,7 +17,7 @@ The label Orca shows on a terminal tab. Set with `orca terminal rename`; it is s
 _Avoid_: window title, terminal title
 
 **First message**:
-The first non-command user input in a session's thread; the only message the extension persists into the title store.
+The first non-command user input in a session that has no entries yet (a fresh session); the only message the extension persists into the title store. A session that already has history when pi starts — for example one created before the extension existed — has no first message, and nothing is persisted for it.
 _Avoid_: prompt, initial message
 
 **Title store**:
@@ -27,6 +27,10 @@ _Avoid_: database, state store
 **Default title convention**:
 The tab title for a session with no stored title: `Pi`.
 _Avoid_: default name, fallback title
+
+**Title resolution**:
+The tab title for a session comes from the title store, keyed by session id alone — never from how pi was launched (`pi`, `pi --session`, `pi -c`, `/resume`, `/new`, `/fork`) nor from the session_start reason. A session with no stored title falls back to the default title convention.
+_Avoid_: resume logic, startup logic
 
 **Spawn**:
 The `/spawn` command — open a new Orca tab running pi in the current worktree with a fresh session.
