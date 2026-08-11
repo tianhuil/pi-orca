@@ -1,3 +1,4 @@
 .pi-subagents/
 node_modules/
 *.sqlite.db
+.pi/
