@@ -2,6 +2,8 @@
 
 A pi extension that keeps the Orca terminal tab title in sync with the pi session running inside it, and spawns new pi tabs from pi.
 
+Pi runs on Node via the shebang in its binary (`#!/opt/homebrew/opt/node/bin/node`), which tracks Homebrew's latest stable Node. This version may differ from the Node in the user's shell PATH (e.g. nvm-managed). Extensions run inside pi's Node process, so native addons must match pi's Node — not the user's PATH Node.
+
 ## Language
 
 **Session**:

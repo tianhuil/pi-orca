@@ -130,8 +130,8 @@ export default async function (pi: ExtensionAPI) {
   // Register the provider before any handler can fire.
   registerZenProvider(pi);
 
-  // Initialize store (persistent DB)
-  const store = createTitleStore(resolveDbPath());
+  // Initialize store (persistent DB) — async because sql.js loads WASM
+  const store = await createTitleStore(resolveDbPath());
 
   // Executor for Orca CLI commands
   const executor = createPiExecutor(pi);

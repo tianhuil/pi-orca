@@ -1,5 +1,9 @@
-# Tab titles are set via `orca terminal rename`, not pi's OSC titles
+# Tab titles are set via orca terminal rename, not pi's OSC writes
 
-Orca tab titles are renamed with the orca CLI (`orca terminal rename --terminal <handle> --title <text>`), never via `ctx.ui.setTitle()` or by relying on pi's built-in title logic. Verified live in Orca 1.4.x: after a rename, subsequent OSC-0 title writes from the terminal process are ignored, so the extension fully owns the tab title.
+**Status:** accepted
 
-pi's built-in `updateTerminalTitle` writes `Pi - <session> - <cwd>` via OSC at startup and on session rename, so `pi.setSessionName()` alone cannot produce an exact short title or the literal `Pi` for new sessions. The extension may still call `pi.setSessionName()` for pi's internal session picker, but the Orca rename is applied last and is the source of truth for the tab.
+**Context:** pi writes OSC title escape sequences that most terminals pick up as the window/tab title. Orca has its own `orca terminal rename` command that sets the tab label independently of OSC writes.
+
+**Decision:** Set tab titles exclusively via `orca terminal rename`. This is sticky — once set, it survives pi's own OSC title writes, so the title stays stable for the lifetime of the session.
+
+**Consequences:** Tab titles and pi's internal session name are two separate things that we keep in sync. The `/resume` picker shows the pi session name; the Orca tab shows the rename-set label.
