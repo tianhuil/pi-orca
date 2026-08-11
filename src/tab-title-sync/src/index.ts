@@ -25,7 +25,7 @@ import { DEFAULT_TITLE } from "./title.js";
 // ---------------------------------------------------------------------------
 
 const PROVIDER_ID = "pi-orca-zen";
-const MODEL_ID = "mimo-v2.5-free";
+const MODEL_ID = "deepseek-v4-flash-free";
 const SUMMARIZE_MAX_TOKENS = 80;
 
 function registerZenProvider(pi: ExtensionAPI): void {
@@ -36,7 +36,7 @@ function registerZenProvider(pi: ExtensionAPI): void {
     models: [
       {
         id: MODEL_ID,
-        name: "Mimo v2.5 Free",
+        name: "DeepSeek V4 Flash Free",
         reasoning: false,
         input: ["text"],
         cost: { input: 0, output: 0, cacheRead: 0, cacheWrite: 0 },
@@ -171,8 +171,10 @@ export default async function (pi: ExtensionAPI) {
       return;
     }
 
-    // No row at all
-    canPersist = ctx.sessionManager.getEntries().length === 0;
+    // No row at all — eligible to persist if no user messages exist yet
+    canPersist = !ctx.sessionManager.getEntries().some(
+      (e) => e.type === "message" && e.message?.role === "user",
+    );
 
     // Rename tab to default title ("Pi")
     if (handle) {
