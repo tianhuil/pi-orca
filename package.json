@@ -1,0 +1,18 @@
+{
+  "name": "pi-orca",
+  "version": "1.0.0",
+  "description": "Pi extension that keeps Orca terminal tab titles in sync with the running pi session",
+  "keywords": ["pi-package"],
+  "type": "module",
+  "dependencies": {
+    "better-sqlite3": "^11.7.0",
+    "drizzle-orm": "^0.36.0"
+  },
+  "peerDependencies": {
+    "@earendil-works/pi-coding-agent": "*",
+    "@earendil-works/pi-ai": "*"
+  },
+  "pi": {
+    "extensions": ["./src/tab-title-sync/src/index.ts"]
+  }
+}

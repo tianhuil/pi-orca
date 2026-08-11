@@ -11,17 +11,28 @@ A [pi](https://github.com/earendil-works/pi-coding-agent) extension that keeps y
 ## Install
 
 ```bash
+pi install git:github.com/tianhuil/pi-orca
+```
+
+Then reload pi (`/reload`). The extension loads automatically via the `pi.extensions` field in `package.json`.
+
+<details>
+<summary>Manual install</summary>
+
+```bash
 # Clone the repo into your pi extensions directory
 git clone https://github.com/tianhuil/pi-orca.git ~/.pi/extensions/pi-orca
 cd ~/.pi/extensions/pi-orca
 
 # Install dependencies (Node.js required — extensions run on Node, not Bun)
-pnpm install
+npm install
 ```
 
-Then reload pi (`/reload`) — the extension loads automatically via the `pi.extensions` field in `package.json`.
+Then reload pi (`/reload`).
 
-**Requirements:** Node.js 18+, pnpm, the [Orca](https://orca.dev) app. No API keys needed — title summarization uses a free model endpoint out of the box.
+</details>
+
+**Requirements:** Node.js 18+, the [Orca](https://orca.dev) app. No API keys needed — title summarization uses a free model endpoint out of the box.
 
 ## How it works
 
