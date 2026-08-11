@@ -27,6 +27,7 @@
     "test:watch": "vitest",
     "prepublishOnly": "npm test",
     "preview": "npm pack --dry-run",
+    "smoke:e2e": "node scripts/smoke-e2e.mjs",
     "release": "npm version patch && npm publish"
   },
   "files": ["src/tab-title-sync/src"],

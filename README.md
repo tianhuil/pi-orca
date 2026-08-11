@@ -90,12 +90,32 @@ Key design decisions are documented in the [`docs/adr/`](docs/adr/) directory:
 ## Development
 
 ```bash
-pnpm install
-pnpm test          # run unit tests (vitest)
-pnpm test:watch    # watch mode
+npm install
+npm test          # run unit tests (vitest)
+npm test:watch    # watch mode
 ```
 
 Tests use in-memory SQLite and injectable model/executor fakes — no real Orca, no real API calls.
+
+### E2E smoke test (Orca-only)
+
+An end-to-end smoke test validates that the extension loads inside pi without errors and that the pi-in-Orca integration (tab rename, summarization) works end-to-end. This requires the Orca app — it is **not** run in CI.
+
+```bash
+# From any Orca terminal whose worktree is this repo:
+npm run smoke:e2e
+
+# Or skip the Orca integration check (startup-error scan only):
+npm run smoke:e2e -- --skip-orca
+```
+
+**What it checks:**
+
+1. **Startup errors** — scans the most recent pi session log (`~/.pi/agent/sessions/`) for this repo and flags unexpected `errorMessage` fields, missing `session`/`model_change` records, and suspicious tool errors. Best-effort heuristics; benign exit codes and user-initiated aborts are ignored.
+
+2. **Pi-in-Orca integration** — spawns a fresh pi tab in the current worktree, waits for pi to become ready, verifies the tab title is `Pi` (confirming the `session_start` handler fired), sends a test message, and verifies the title changes (confirming the summarization pipeline ran). The test tab is cleaned up automatically.
+
+**Prerequisites:** Orca must be running and this repo must be open as a worktree. The `ORCA_TERMINAL_HANDLE` environment variable must be set (Orca sets this automatically in its terminals).
 
 ## Publishing
 
