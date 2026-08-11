@@ -1,8 +1,11 @@
 {
   "name": "@tianhuil/pi-orca",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Pi extension that keeps Orca terminal tab titles in sync with the running pi session",
-  "keywords": ["pi-package", "extension"],
+  "keywords": [
+    "pi-package",
+    "extension"
+  ],
   "license": "MIT",
   "author": "Tianhui Michael Li <tianhuil@cs.princeton.edu>",
   "repository": {
@@ -30,11 +33,15 @@
     "smoke:e2e": "node scripts/smoke-e2e.mjs",
     "release": "npm version patch && npm publish"
   },
-  "files": ["src/tab-title-sync/src"],
+  "files": [
+    "src/tab-title-sync/src"
+  ],
   "publishConfig": {
     "access": "public"
   },
   "pi": {
-    "extensions": ["./src/tab-title-sync/src/index.ts"]
+    "extensions": [
+      "./src/tab-title-sync/src/index.ts"
+    ]
   }
 }
