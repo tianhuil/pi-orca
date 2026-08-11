@@ -1,5 +1,5 @@
 {
-  "name": "pi-orca",
+  "name": "@tianhuil/pi-orca",
   "version": "1.0.0",
   "description": "Pi extension that keeps Orca terminal tab titles in sync with the running pi session",
   "keywords": ["pi-package", "extension"],
@@ -30,6 +30,9 @@
     "release": "npm version patch && npm publish"
   },
   "files": ["src/tab-title-sync/src"],
+  "publishConfig": {
+    "access": "public"
+  },
   "pi": {
     "extensions": ["./src/tab-title-sync/src/index.ts"]
   }

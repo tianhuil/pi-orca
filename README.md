@@ -11,10 +11,16 @@ A [pi](https://github.com/earendil-works/pi-coding-agent) extension that keeps y
 ## Install
 
 ```bash
-pi install git:github.com/tianhuil/pi-orca
+pi install npm:@tianhuil/pi-orca
 ```
 
 Then reload pi (`/reload`). The extension loads automatically via the `pi.extensions` field in `package.json`.
+
+Prefer living on main? Install straight from the repo instead:
+
+```bash
+pi install git:github.com/tianhuil/pi-orca
+```
 
 <details>
 <summary>Manual install</summary>
@@ -104,20 +110,18 @@ npm run preview      # dry-run: inspect tarball contents before publishing
 
 `npm publish` is gated by the `prepublishOnly` script (full test suite). For bigger bumps run `npm version <minor|major>` and then `npm publish`; `npm version` also creates the matching git tag, which `pi install git:github.com/tianhuil/pi-orca@v1` can pin to.
 
-After publishing, verify the listing:
+After publishing, verify the listing (note the scoped name is URL-encoded as `@tianhuil%2fpi-orca` in the registry URL):
 
 ```bash
 # 1. keyword on the published manifest (drives the card badge + preview)
-curl -s https://registry.npmjs.org/<name>/latest | jq -r '.keywords[]' | grep -qx pi-package
+curl -s https://registry.npmjs.org/@tianhuil%2fpi-orca/latest | jq -r '.keywords[]' | grep -qx pi-package
 
 # 2. visible to the gallery's exact query
-curl -s "https://registry.npmjs.org/-/v1/search?text=keywords:pi-package%20<name>&size=20" \
-  | jq -r '.objects[].package.name' | grep -x "<name>"
+curl -s "https://registry.npmjs.org/-/v1/search?text=keywords:pi-package%20@tianhuil/pi-orca&size=20" \
+  | jq -r '.objects[].package.name' | grep -x "@tianhuil/pi-orca"
 ```
 
-Both should exit 0; the search index can lag a publish by a few minutes.
-
-> **⚠️ npm name conflict — do not publish yet.** The name `pi-orca` is already taken on npm by an unrelated package (`pi-orca@0.1.0`, author `yuki-kisaku`). `npm publish` will be rejected until this package is renamed — e.g. to the scoped `@tianhuil/pi-orca` (scoped names publish fine with `--access public`, which `npm publish` already uses) — and `name` in `package.json`, the install instructions above, and the verify commands are updated to match.
+Both should exit 0; the search index can lag a publish by a few minutes. (The package is scoped, so `publishConfig.access: "public"` in `package.json` is what makes plain `npm publish` list it publicly — don't remove it.)
 
 ## License
 

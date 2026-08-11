@@ -18,5 +18,5 @@ npm publishing is set up for this repo; the full workflow lives in `README.md` �
 
 - **Metadata**: keep the `pi-package` + `extension` keywords and the `pi` manifest (`pi.extensions`) in `package.json`. Core pi packages (`@earendil-works/*`, `typebox`) go in `peerDependencies` with `"*"` and are never bundled; third-party runtime deps (e.g. `sql.js`) go in `dependencies`.
 - **Publish**: `npm publish` (tests run via `prepublishOnly`) or `npm run release` (patch bump + git tag + publish). Use `npm run preview` to dry-run tarball contents first.
-- **Verify after publish**: the `pi-package` keyword must appear on the registry manifest and the package must show up in the gallery query (`keywords:pi-package <name>`). The pi.dev/packages gallery is a keyword index — there is no submission step.
-- **⚠️ Blocked**: the npm name `pi-orca` is taken by an unrelated package. Do **not** run `npm publish` until `name` in `package.json` is changed to a free name.
+- **Verify after publish**: the `pi-package` keyword must appear on the registry manifest and the package must show up in the gallery query (`keywords:pi-package @tianhuil/pi-orca`). The pi.dev/packages gallery is a keyword index — there is no submission step.
+- **⚠️ Scoped name**: `name` is `@tianhuil/pi-orca`. Keep `publishConfig.access: "public"` in `package.json` — scoped packages default to restricted access and `npm publish` fails without it.
