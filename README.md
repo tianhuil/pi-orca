@@ -91,6 +91,34 @@ pnpm test:watch    # watch mode
 
 Tests use in-memory SQLite and injectable model/executor fakes — no real Orca, no real API calls.
 
+## Publishing
+
+Published to npm and auto-listed on the [pi.dev/packages](https://pi.dev/packages) gallery — the gallery is an npm keyword index (`keywords:pi-package`), not a registry with a submission step.
+
+```bash
+npm login            # once per machine, with your npmjs.com account
+npm publish          # runs the tests (prepublishOnly), then publishes
+npm run release      # patch-bump + git tag + publish in one step
+npm run preview      # dry-run: inspect tarball contents before publishing
+```
+
+`npm publish` is gated by the `prepublishOnly` script (full test suite). For bigger bumps run `npm version <minor|major>` and then `npm publish`; `npm version` also creates the matching git tag, which `pi install git:github.com/tianhuil/pi-orca@v1` can pin to.
+
+After publishing, verify the listing:
+
+```bash
+# 1. keyword on the published manifest (drives the card badge + preview)
+curl -s https://registry.npmjs.org/<name>/latest | jq -r '.keywords[]' | grep -qx pi-package
+
+# 2. visible to the gallery's exact query
+curl -s "https://registry.npmjs.org/-/v1/search?text=keywords:pi-package%20<name>&size=20" \
+  | jq -r '.objects[].package.name' | grep -x "<name>"
+```
+
+Both should exit 0; the search index can lag a publish by a few minutes.
+
+> **⚠️ npm name conflict — do not publish yet.** The name `pi-orca` is already taken on npm by an unrelated package (`pi-orca@0.1.0`, author `yuki-kisaku`). `npm publish` will be rejected until this package is renamed — e.g. to the scoped `@tianhuil/pi-orca` (scoped names publish fine with `--access public`, which `npm publish` already uses) — and `name` in `package.json`, the install instructions above, and the verify commands are updated to match.
+
 ## License
 
 [MIT](LICENSE) © 2026 Tianhui Michael Li

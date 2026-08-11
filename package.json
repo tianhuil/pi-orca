@@ -24,8 +24,12 @@
   },
   "scripts": {
     "test": "vitest run",
-    "test:watch": "vitest"
+    "test:watch": "vitest",
+    "prepublishOnly": "npm test",
+    "preview": "npm pack --dry-run",
+    "release": "npm version patch && npm publish"
   },
+  "files": ["src/tab-title-sync/src"],
   "pi": {
     "extensions": ["./src/tab-title-sync/src/index.ts"]
   }
