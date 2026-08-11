@@ -2,7 +2,14 @@
   "name": "pi-orca",
   "version": "1.0.0",
   "description": "Pi extension that keeps Orca terminal tab titles in sync with the running pi session",
-  "keywords": ["pi-package"],
+  "keywords": ["pi-package", "extension"],
+  "license": "MIT",
+  "author": "Tianhui Michael Li <tianhuil@cs.princeton.edu>",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/tianhuil/pi-orca.git"
+  },
+  "homepage": "https://github.com/tianhuil/pi-orca",
   "type": "module",
   "dependencies": {
     "sql.js": "^1.11.0"
